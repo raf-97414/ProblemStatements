@@ -54,4 +54,5 @@ on:
           context: "{{defaultContext}}"
           push: true
           tags: ${{ steps.meta.outputs.tags }}
-          la
+          labels: ${{ steps.meta.outputs.labels }}
+
