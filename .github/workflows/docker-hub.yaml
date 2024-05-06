@@ -1,12 +1,14 @@
 name: Build and Push a Docker image to Docker Hub
 on:
   push:
-    branches: ["main"]
+    branches:
+      - main
 
   env:
+    REGISTRY: docker.io
     DOCKER_REPOSITORY: cyb3rark97
-      IMAGE_NAME: wisecow
-      IMAGE_TAG: ${{ github.run_number }}
+    IMAGE_NAME: wisecow
+    IMAGE_TAG: ${{ github.run_number }}
 
   jobs:
     build:
@@ -44,7 +46,7 @@ on:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ${{ env.DOCKER_REPOSITORY }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
+          images: ${{env.REGISTRY}}/${{ env.DOCKER_REPOSITORY }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
@@ -53,3 +55,4 @@ on:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+
