@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: wisecow-pod
+  labels:
+    app: wisecowapp
+spec:
+  containers:
+  - image: cyb3rark97/wisecowcontainer:1.0
+    name: wisecow
+    ports:
+    - containerPort: 4499
