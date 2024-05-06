@@ -1,12 +1,12 @@
 name: Build and Push a Docker image to Docker Hub
 on:
   push:
-    branches: ["dev","main"]
-  pull-request:
-    branches: ["dev","main"]
+    branches: ["main"]
+
   env:
-    REGISTRY: docker.io
-    IMAGE_NAME: cyb3rark97/wisecowcontainer:1.0
+    DOCKER_REPOSITORY: cyb3rark97
+      IMAGE_NAME: wisecow
+      IMAGE_TAG: ${{ github.run_number }}
 
   jobs:
     build:
@@ -16,7 +16,7 @@ on:
         - uses: actions/checkout@v3
         - name: Build the Docker image
           run: docker-compose build --no-cache --force=rm
-          
+
     test:
     runs-on: ubuntu-latest
     steps:
@@ -44,7 +44,7 @@ on:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          images: ${{ env.DOCKER_REPOSITORY }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
